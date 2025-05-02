@@ -44,7 +44,7 @@ var response = await RequestBuilder
 ## ✨ Example API
 
 ```csharp
-public Task<ApiResponse<List<UserItem>>?> MarketMap(CancellationToken cancellationToken = default)
+public Task<ApiResponse<List<UserItem>>?> UsersList(CancellationToken cancellationToken = default)
     => RequestBuilder.Create(HttpMethod.Get, Urls.GetUsersList)
         .SendAsync<ApiResponse<List<UserItem>>>(_restClient, cancellationToken);
 ```
