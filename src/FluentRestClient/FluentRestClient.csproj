@@ -11,6 +11,8 @@
         <RepositoryUrl>https://github.com/mraghakhani/FluentRestClient.git</RepositoryUrl>
         <PackageId>FluentRestClient</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>../../README.md</PackageReadmeFile>
+
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
