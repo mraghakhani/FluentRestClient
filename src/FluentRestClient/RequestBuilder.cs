@@ -1,10 +1,10 @@
 using System.Text.Json;
-using Ali.RestService.Extensions;
-using Ali.RestService.Services;
+using FluentRestClient.Extensions;
+using FluentRestClient.Services;
 using MessagePack;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Ali.RestService;
+namespace FluentRestClient;
 
 /// <summary>
 /// Fluent builder for constructing and sending HTTP requests using configurable options.

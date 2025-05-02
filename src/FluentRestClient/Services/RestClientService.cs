@@ -3,7 +3,7 @@ using System.Net.Mime;
 using System.Text.Json;
 using MessagePack;
 
-namespace Ali.RestService.Services;
+namespace FluentRestClient.Services;
 
 /// <inheritdoc />
 internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : IRestClientService

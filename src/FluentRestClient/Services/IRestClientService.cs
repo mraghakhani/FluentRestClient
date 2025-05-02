@@ -1,4 +1,4 @@
-﻿namespace Ali.RestService.Services;
+﻿namespace FluentRestClient.Services;
 
 /// <summary>
 /// Defines the contract for making HTTP requests with various options for handling responses.

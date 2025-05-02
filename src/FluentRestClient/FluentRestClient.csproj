@@ -4,11 +4,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>Ali.RestService</AssemblyName>
         <Version>1.0.0</Version>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageProjectUrl>https://github.com/mraghakhani/Ali.RestService.git</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/mraghakhani/FluentRestClient.git</PackageProjectUrl>
+        <PackageId>FluentRestClient</PackageId>
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>

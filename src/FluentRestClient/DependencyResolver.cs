@@ -1,8 +1,8 @@
-﻿using Ali.RestService.Services;
+﻿using FluentRestClient.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ali.RestService;
+namespace FluentRestClient;
 
 /// <summary>
 /// Provides extension methods for registering REST client services in the dependency injection container.

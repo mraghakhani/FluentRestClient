@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using MessagePack;
 
-namespace Ali.RestService;
+namespace FluentRestClient;
 
 /// <summary>
 /// Represents configurable options for HTTP requests, including serialization settings, headers, authorization, and more.
