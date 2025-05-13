@@ -18,7 +18,7 @@ public static class DependencyResolver
     /// <returns>The updated <see cref="IServiceCollection"/> instance.</returns>
     public static IServiceCollection AddRestServices(this IServiceCollection services)
     {
-        services.AddScoped<IRestClientService, RestClientService>();
+        services.AddSingleton<IRestClientService, RestClientService>();
         services.AddHttpContextAccessor();
         return services;
     }
