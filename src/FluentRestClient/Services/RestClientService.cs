@@ -94,7 +94,7 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
     }
 
     /// <inheritdoc />
-    public async Task<ReadOnlyMemory<byte>> RequestAsync(
+    public async Task<(ReadOnlyMemory<byte> responseBody, int statusCode)> RequestAsync(
         HttpMethod method, string url, RequestOptions options, CancellationToken cancellationToken = default)
     {
         using var client = CreateHttpClient(options.BaseClientKey);
@@ -113,6 +113,6 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
         AddHeaders(request, options.Headers);
 
         var response = await client.SendAsync(request, cancellationToken);
-        return await response.Content.ReadAsByteArrayAsync(cancellationToken);
+        return (await response.Content.ReadAsByteArrayAsync(cancellationToken), (int)response.StatusCode);
     }
 }

@@ -137,12 +137,13 @@ public sealed class RequestBuilder
         => client.RequestAsync<TResponse>(_method, _url, _options, cancellationToken);
 
     /// <summary>
-    /// Sends the HTTP request and returns the raw byte response (useful for file downloads or binary data).
+    /// Sends an HTTP request using the provided <see cref="IRestClientService"/> and returns the raw response content as a byte array, along with the HTTP status code.
+    /// Useful for handling binary responses such as file downloads or image data.
     /// </summary>
-    /// <param name="client">A service for sending HTTP requests.</param>
-    /// <param name="cancellationToken">Optional cancellation token.</param>
-    /// <returns>Byte array of the response content.</returns>
-    public async Task<ReadOnlyMemory<byte>> SendAsBytesAsync(IRestClientService client,
+    /// <param name="client">The HTTP client service responsible for sending the request.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>A tuple containing the response body as <see cref="ReadOnlyMemory{Byte}"/> and the HTTP status code.</returns>
+    public async Task<(ReadOnlyMemory<byte> body, int statusCode)> SendAsBytesAsync(IRestClientService client,
         CancellationToken cancellationToken = default)
         => await client.RequestAsync(_method, _url, _options, cancellationToken);
 
