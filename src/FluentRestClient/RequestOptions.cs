@@ -55,6 +55,16 @@ public class RequestOptions
     public Encoding Encoding { get; set; } = Encoding.UTF8;
 
     /// <summary>
+    /// Gets or sets whether to use multipart/form-data content type.
+    /// </summary>
+    public bool UseMultipartFormData { get; set; } = false;
+
+    /// <summary>
+    /// Gets or sets the multipart form data content (files and form fields).
+    /// </summary>
+    public MultipartFormDataContent? MultipartContent { get; set; }
+
+    /// <summary>
     /// Gets a reusable default instance of <see cref="RequestOptions"/>.
     /// </summary>
     public static readonly RequestOptions Default = new();

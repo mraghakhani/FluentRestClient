@@ -89,4 +89,67 @@ public static class RequestOptionsExtensions
         options.Encoding = encoding;
         return options;
     }
+
+    /// <summary>
+    /// Enables multipart/form-data content type for the request.
+    /// </summary>
+    public static RequestOptions WithMultipartFormData(this RequestOptions options)
+    {
+        options.UseMultipartFormData = true;
+        options.UseMessagePack = false;
+        options.MessagePackSerializerOptions = null;
+        options.MultipartContent ??= new MultipartFormDataContent();
+        return options;
+    }
+
+    /// <summary>
+    /// Adds a file to the multipart/form-data request.
+    /// </summary>
+    /// <param name="options">The request options.</param>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="fileContent">The file content as a byte array.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="contentType">Optional content type (defaults to application/octet-stream).</param>
+    public static RequestOptions AddFile(this RequestOptions options, string name, byte[] fileContent, string fileName, string? contentType = null)
+    {
+        options.WithMultipartFormData();
+        
+        var byteArrayContent = new ByteArrayContent(fileContent);
+        byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType ?? "application/octet-stream");
+        
+        options.MultipartContent!.Add(byteArrayContent, name, fileName);
+        return options;
+    }
+
+    /// <summary>
+    /// Adds a file stream to the multipart/form-data request.
+    /// </summary>
+    /// <param name="options">The request options.</param>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="fileStream">The file stream.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="contentType">Optional content type (defaults to application/octet-stream).</param>
+    public static RequestOptions AddFileStream(this RequestOptions options, string name, Stream fileStream, string fileName, string? contentType = null)
+    {
+        options.WithMultipartFormData();
+        
+        var streamContent = new StreamContent(fileStream);
+        streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType ?? "application/octet-stream");
+        
+        options.MultipartContent!.Add(streamContent, name, fileName);
+        return options;
+    }
+
+    /// <summary>
+    /// Adds a form field to the multipart/form-data request.
+    /// </summary>
+    /// <param name="options">The request options.</param>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="value">The value of the form field.</param>
+    public static RequestOptions AddFormField(this RequestOptions options, string name, string value)
+    {
+        options.WithMultipartFormData();
+        options.MultipartContent!.Add(new StringContent(value), name);
+        return options;
+    }
 }

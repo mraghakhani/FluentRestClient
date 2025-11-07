@@ -103,6 +103,46 @@ public sealed class RequestBuilder
     }
 
     /// <summary>
+    /// Adds a file to the multipart/form-data request.
+    /// </summary>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="fileContent">The file content as a byte array.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="contentType">Optional content type (defaults to application/octet-stream).</param>
+    /// <returns>The current <see cref="RequestBuilder"/> instance.</returns>
+    public RequestBuilder WithFile(string name, byte[] fileContent, string fileName, string? contentType = null)
+    {
+        _options.AddFile(name, fileContent, fileName, contentType);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a file stream to the multipart/form-data request.
+    /// </summary>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="fileStream">The file stream.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="contentType">Optional content type (defaults to application/octet-stream).</param>
+    /// <returns>The current <see cref="RequestBuilder"/> instance.</returns>
+    public RequestBuilder WithFileStream(string name, Stream fileStream, string fileName, string? contentType = null)
+    {
+        _options.AddFileStream(name, fileStream, fileName, contentType);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a form field to the multipart/form-data request.
+    /// </summary>
+    /// <param name="name">The name of the form field.</param>
+    /// <param name="value">The value of the form field.</param>
+    /// <returns>The current <see cref="RequestBuilder"/> instance.</returns>
+    public RequestBuilder WithFormField(string name, string value)
+    {
+        _options.AddFormField(name, value);
+        return this;
+    }
+
+    /// <summary>
     /// Appends query string parameters to the request URL.
     /// </summary>
     /// <param name="queryParams">Key-value pairs of query parameters.</param>

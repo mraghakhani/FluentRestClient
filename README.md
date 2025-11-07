@@ -6,6 +6,7 @@ A lightweight, fluent, and extensible REST client wrapper for .NET, designed to 
 
 - Fluent request building syntax
 - Supports JSON and MessagePack serialization
+- **Multipart/form-data support for file uploads**
 - Cancellation token support
 - Custom headers, query parameters, and request options
 - Strongly typed responses
@@ -41,6 +42,42 @@ var response = await RequestBuilder
     .SendAsync<List<ItemDto>>(httpClient, cancellationToken);
 ```
 
+### File Upload with Multipart/Form-Data
+
+Upload files using multipart/form-data:
+
+```csharp
+// Upload a single file
+byte[] fileBytes = File.ReadAllBytes("document.pdf");
+var response = await RequestBuilder
+    .Create(HttpMethod.Post, "https://api.example.com/upload")
+    .WithFile("file", fileBytes, "document.pdf", "application/pdf")
+    .WithFormField("description", "My document")
+    .SendAsync<UploadResponse>(httpClient, cancellationToken);
+```
+
+Or upload using a file stream:
+
+```csharp
+using var fileStream = File.OpenRead("image.jpg");
+var response = await RequestBuilder
+    .Create(HttpMethod.Post, "https://api.example.com/upload")
+    .WithFileStream("image", fileStream, "image.jpg", "image/jpeg")
+    .WithFormField("title", "Profile Picture")
+    .SendAsync<UploadResponse>(httpClient, cancellationToken);
+```
+
+Upload multiple files:
+
+```csharp
+var response = await RequestBuilder
+    .Create(HttpMethod.Post, "https://api.example.com/upload-multiple")
+    .WithFile("file1", file1Bytes, "doc1.pdf", "application/pdf")
+    .WithFile("file2", file2Bytes, "doc2.pdf", "application/pdf")
+    .WithFormField("category", "documents")
+    .SendAsync<UploadResponse>(httpClient, cancellationToken);
+```
+
 ## ✨ Example API
 
 ```csharp
@@ -53,7 +90,9 @@ public Task<ApiResponse<List<UserItem>>?> UsersList(CancellationToken cancellati
 
 -[x] Fluent API for building REST requests
 
--[x] Custom serialization options
+-[x] Custom serialization options (JSON and MessagePack)
+
+-[x] Multipart/form-data support for file uploads
 
 -[ ] Optional retry policies (coming soon)
 
