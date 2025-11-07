@@ -4,9 +4,9 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.0.3</Version>
-        <AssemblyVersion>1.0.3</AssemblyVersion>
-        <FileVersion>1.0.3</FileVersion>
+        <Version>1.1.3</Version>
+        <AssemblyVersion>1.1.3</AssemblyVersion>
+        <FileVersion>1.1.3</FileVersion>
         <PackageProjectUrl>https://github.com/mraghakhani/FluentRestClient.git</PackageProjectUrl>
         <RepositoryUrl>https://github.com/mraghakhani/FluentRestClient.git</RepositoryUrl>
         <PackageId>FluentRestClient</PackageId>
@@ -19,7 +19,7 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MessagePack" Version="3.1.3"/>
+        <PackageReference Include="MessagePack" Version="3.1.4"/>
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>

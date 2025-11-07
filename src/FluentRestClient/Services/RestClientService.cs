@@ -24,14 +24,29 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
     /// Serializes the request body using either JSON or MessagePack based on the provided options.
     /// </summary>
     private static HttpContent SerializeBody(RequestOptions options)
-        => options.UseMessagePack
-            ? new ByteArrayContent(
-                MessagePackSerializer.Serialize(options.RequestBody, options.MessagePackSerializerOptions))
-            : new StringContent(JsonSerializer.Serialize(options.RequestBody, options.JsonOptions), options.Encoding,
-                MediaTypeNames.Application.Json);
+    {
+        if (!options.UseMultipartFormData)
+            return options.UseMessagePack
+                ? new ByteArrayContent(
+                    MessagePackSerializer.Serialize(options.RequestBody, options.MessagePackSerializerOptions))
+                : new StringContent(JsonSerializer.Serialize(options.RequestBody, options.JsonOptions),
+                    options.Encoding,
+                    MediaTypeNames.Application.Json);
+
+        if (options.MultipartContent == null)
+            throw new InvalidOperationException("MultipartContent cannot be null when UseMultipartFormData is true.");
+
+        return options.MultipartContent;
+    }
 
     private static void ConfigureContentHeaders(HttpRequestMessage request, RequestOptions options)
     {
+        // For multipart/form-data, don't set Accept or Content-Type headers manually
+        // as MultipartFormDataContent sets them automatically
+        if (options.UseMultipartFormData)
+            // Multipart content handles its own Content-Type header
+            return;
+
         var mediaType = options.UseMessagePack ? MessagePackMediaType : JsonMediaType;
 
         request.Headers.Accept.Clear();
@@ -79,12 +94,10 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue(BearerAuthenticationScheme, options.BearerToken);
 
-
         var request = new HttpRequestMessage(method, url)
         {
-            Content = options.RequestBody != null ? SerializeBody(options) : null
+            Content = options.UseMultipartFormData || options.RequestBody != null ? SerializeBody(options) : null
         };
-
         ConfigureContentHeaders(request, options);
 
         AddHeaders(request, options.Headers);
@@ -105,7 +118,7 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
 
         var request = new HttpRequestMessage(method, url)
         {
-            Content = options.RequestBody != null ? SerializeBody(options) : null
+            Content = options.UseMultipartFormData || options.RequestBody != null ? SerializeBody(options) : null
         };
 
         ConfigureContentHeaders(request, options);
