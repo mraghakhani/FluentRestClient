@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using MessagePack;
@@ -115,7 +117,7 @@ public static class RequestOptionsExtensions
         options.WithMultipartFormData();
         
         var byteArrayContent = new ByteArrayContent(fileContent);
-        byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType ?? "application/octet-stream");
+        byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue(contentType ?? "application/octet-stream");
         
         options.MultipartContent!.Add(byteArrayContent, name, fileName);
         return options;
@@ -134,7 +136,7 @@ public static class RequestOptionsExtensions
         options.WithMultipartFormData();
         
         var streamContent = new StreamContent(fileStream);
-        streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType ?? "application/octet-stream");
+        streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType ?? "application/octet-stream");
         
         options.MultipartContent!.Add(streamContent, name, fileName);
         return options;

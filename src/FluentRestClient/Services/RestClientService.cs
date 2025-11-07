@@ -25,8 +25,13 @@ internal sealed class RestClientService(IHttpClientFactory httpClientFactory) : 
     /// </summary>
     private static HttpContent SerializeBody(RequestOptions options)
     {
-        if (options.UseMultipartFormData && options.MultipartContent != null)
+        if (options.UseMultipartFormData)
+        {
+            if (options.MultipartContent == null)
+                throw new InvalidOperationException("MultipartContent cannot be null when UseMultipartFormData is true.");
+            
             return options.MultipartContent;
+        }
 
         return options.UseMessagePack
             ? new ByteArrayContent(
